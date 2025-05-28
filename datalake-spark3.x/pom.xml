@@ -9,4 +9,65 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>datalake-spark3.x</artifactId>
+
+    <properties>
+        <scala.binary.version>2.12</scala.binary.version>
+
+        <hadoop.version>3.1.0</hadoop.version>
+        <hive.version>3.1.1</hive.version>
+        <spark.major.version>3.0</spark.major.version>
+        <spark.version>${spark.major.version}.0</spark.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-spark${spark.major.version}.x_${scala.binary.version}</artifactId>
+            <version>${hudi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-spark_${scala.binary.version}</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hudi</groupId>
+                    <artifactId>hudi-spark3.2.x_2.12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <artifactSet>
+                        <excludes>
+                            <exclude>org.apache.hadoop:*</exclude>
+                            <exclude>org.apache.hudi:*</exclude>
+                            <exclude>org.apache.commons:*</exclude>
+                            <exclude>commons-codec:*</exclude>
+                            <exclude>org.apache.log4j:*</exclude>
+                            <exclude>org.apache.logging:*</exclude>
+                            <exclude>com.fasterxml.jackson.core:*</exclude>
+                            <exclude>com.squareup.okio:*</exclude>
+                            <exclude>com.squareup.okhttp:*</exclude>
+                            <exclude>org.slf4j:*</exclude>
+                            <exclude>org.scala-lang.modules:*</exclude>
+                            <exclude>log4j:*</exclude>
+                            <exclude>org.apache.logging.log4j:*</exclude>
+                            <exclude>org.apache.logging.slf4j:*</exclude>
+                        </excludes>
+                    </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <pattern>io.prometheus</pattern>
+                            <shadedPattern>com.xueyingying.datalake.shaded.io.prometheus</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

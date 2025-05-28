@@ -25,30 +25,18 @@
         <scala211.version>2.11</scala211.version>
         <scala212.version>2.12</scala212.version>
         <scala.version>${scala.binary.version}.12</scala.version>
-        <scala.collection-compat.version>2.8.1</scala.collection-compat.version>
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Plugin Dependency Versions -->
-        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
         <maven-scala-plugin.version>4.3.0</maven-scala-plugin.version>
-        <maven-datanucleus-plugin.version>4.0.5</maven-datanucleus-plugin.version>
-
-        <!-- SLF4J/LOG4J/LOGBACK version -->
-        <slf4j.version>1.7.25</slf4j.version>
-        <log4j.version>1.2.17</log4j.version>
-        <log4j2.version>2.17.1</log4j2.version>
-        <logback.version>1.2.3</logback.version>
 
         <!-- Library Dependency Versions -->
-        <hadoop.version>3.1.1</hadoop.version>
-        <hbase.version>2.4.9</hbase.version>
-        <hive.version>3.1.0</hive.version>
-        <hive.exec.classifier>core</hive.exec.classifier>
-        <hive.jdbc.driver.classifier>standalone</hive.jdbc.driver.classifier>
+        <hadoop.version>2.6.0</hadoop.version>
         <hudi.version>0.14.1</hudi.version>
+        <prometheus.version>0.8.1</prometheus.version>
         <spark.major.version>2.4</spark.major.version>
         <spark.version>${spark.major.version}.4</spark.version>
 
@@ -64,73 +52,6 @@
                 <version>${scala.version}</version>
                 <scope>provided</scope>
             </dependency>
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-reflect</artifactId>
-                <version>${scala.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.scala-lang.modules</groupId>
-                <artifactId>scala-java8-compat_${scala.binary.version}</artifactId>
-                <version>0.9.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scala-lang.modules</groupId>
-                <artifactId>scala-collection-compat_${scala.binary.version}</artifactId>
-                <version>${scala.collection-compat.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scala-lang.modules</groupId>
-                <artifactId>scala-xml_${scala.binary.version}</artifactId>
-                <version>1.2.0</version>
-            </dependency>
-
-            <!-- log -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-to-slf4j</artifactId>
-                <version>${log4j2.version}</version>
-            </dependency>
-            <!-- log4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <!-- log4j2 -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-bom</artifactId>
-                <version>${log4j2.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
             <!-- Test -->
             <dependency>
@@ -141,22 +62,20 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-client</artifactId>
+                <version>${hadoop.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-core_${scala.binary.version}</artifactId>
                 <version>${spark.version}</version>
                 <scope>provided</scope>
                 <exclusions>
                     <exclusion>
-                        <groupId>org.apache.hadoop</groupId>
-                        <artifactId>hadoop-client</artifactId>
-                    </exclusion>
-                    <exclusion>
                         <groupId>net.sf.py4j</groupId>
                         <artifactId>py4j</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.avro</groupId>
-                        <artifactId>avro-mapred</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.apache.curator</groupId>
@@ -178,13 +97,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.spark</groupId>
-                <artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId>
-                <version>${spark.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-sql-kafka-0-10_${scala.binary.version}</artifactId>
+                <artifactId>spark-sql_${scala.binary.version}</artifactId>
                 <version>${spark.version}</version>
                 <scope>provided</scope>
             </dependency>
@@ -193,11 +106,23 @@
                 <groupId>org.apache.hudi</groupId>
                 <artifactId>hudi-spark_${scala.binary.version}</artifactId>
                 <version>${hudi.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.curator</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.hudi</groupId>
                 <artifactId>hudi-spark2_${scala.binary.version}</artifactId>
                 <version>${hudi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_pushgateway</artifactId>
+                <version>${prometheus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -206,19 +131,6 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-reflect</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang.modules</groupId>
-            <artifactId>scala-java8-compat_${scala.binary.version}</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.scala-lang.modules</groupId>
-            <artifactId>scala-collection-compat_${scala.binary.version}</artifactId>
         </dependency>
 
         <dependency>
@@ -234,7 +146,15 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming_${scala.binary.version}</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_${scala.binary.version}</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_pushgateway</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -281,30 +201,32 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-source-plugin</artifactId>
+                <artifactId>maven-shade-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
+                            <goal>shade</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <artifactSet>
+                        <excludes>
+                            <exclude>org.scala-lang.modules:*</exclude>
+                            <exclude>log4j:*</exclude>
+                        </excludes>
+                    </artifactSet>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
             </plugin>
         </plugins>

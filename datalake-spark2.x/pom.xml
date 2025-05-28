@@ -10,4 +10,31 @@
     </parent>
     <artifactId>datalake-spark2.x</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-spark-common_${scala.binary.version}</artifactId>
+            <version>${hudi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-spark2_${scala.binary.version}</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hudi</groupId>
+                    <artifactId>hudi-spark-common_2.12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-spark_${scala.binary.version}</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hudi</groupId>
+                    <artifactId>hudi-spark3.2.x_2.12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
 </project>
