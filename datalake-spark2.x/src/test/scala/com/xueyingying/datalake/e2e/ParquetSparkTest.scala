@@ -34,8 +34,6 @@ class ParquetSparkTest extends SparkSuiteBase {
       .add("c1", IntegerType, nullable = false)
       .add("c2", StringType, nullable = true)
 
-    val rowRDD = rdd.map(_.split(" ")).map(line => Row(Integer.valueOf(line(0).trim), line(1)))
-    val df = spark.createDataFrame(rowRDD, schema)
-    df.write.parquet("file:/tmp/parquet")
+    rdd.map(_.split(" ")).map(line => Row(Integer.valueOf(line(0).trim), line(1))).saveAsTextFile("/tmp/t1")
   }
 }

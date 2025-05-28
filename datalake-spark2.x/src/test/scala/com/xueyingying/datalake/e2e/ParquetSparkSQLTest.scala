@@ -16,6 +16,7 @@ class ParquetSparkSQLTest extends SparkSuiteBase {
         |  name STRING
         |)
         |USING parquet
+        |
       """.stripMargin)
 
     spark.sql("INSERT INTO t1 VALUES('1', 'aa')")
